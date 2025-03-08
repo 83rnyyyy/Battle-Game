@@ -1,0 +1,51 @@
+<html>
+    <body>
+
+        <button type="button" onclick="sort(testing2);">
+            Click to Sort
+        </button>
+
+
+        <script>
+
+            'use strict';
+
+            let testing1 = [123,543,54363421,32,1,2,4,5,4,776,23,43,25,26,7,12,34,21,3];
+            let testing2 = ['z', 'zebra', 'a', 't', 'A', 'Z'];
+
+            // sort the array in ascending order
+            // the array parameter is the data that will be sorted
+            // there is no return value because the array parameter will be sorted
+            function sort(array){
+                
+                // go through the array one element at time.
+                // keep track of which index is the boundary between the sorted and
+                // unsorted parts.
+                for (let i = 0; i < array.length - 1; i++){
+                    // assume that the boundary element is the smallest at the start
+                    // of the find minimum algorithm
+                    let smallestIndex = i;
+
+                    // search the array starting from the smallest, to try and find
+                    // anything smaller
+                    for ( let j = i + 1; j < array.length; j++){
+                        // if the current element in the search is smaller than
+                        // smallest, we replace smallest
+                        if (array[j] < array[smallestIndex]){
+                            smallestIndex = j;
+                        }
+                    }
+
+                    // the search has finished, and smallestIndex will be storing the
+                    // location of the actual smallest element
+                    // we will swap the smallest element into the sorted part of the array
+                    let temp = array[i];
+                    array[i] = array[smallestIndex];
+                    array[smallestIndex] = temp;
+                }
+                console.log(testing2)
+            }
+
+        </script>
+    </body>
+</html>
