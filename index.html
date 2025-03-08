@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+
+    <style> 
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0; 
+    }
+
+    canvas {
+        border: 1px solid #000000;
+        position: absolute
+    }
+
+    img {
+            display: none;
+        }
+    
+    input{
+        position: absolute;
+        width: 15%; 
+        height: 4%; 
+        border-radius: 20px;
+        font-size: 0.8rem;
+        padding: 5px;
+        font-family: 'Press Start 2P', cursive; 
+        }
+
+    .submit-button {
+        position: absolute;
+        font-family: 'Press Start 2P', cursive; 
+        font-size: 12px; 
+        z-index: 5;
+        background: linear-gradient(90deg, #8B5A2B, #A0522D); 
+        color: #FFFCE8; 
+        border: 3px solid #452E1F; 
+        border-radius: 0; 
+        box-shadow: 0 4px #5C4033; 
+        cursor: pointer;
+        text-shadow: 1px 1px #452E1F; 
+        outline: none;
+        transition: all 0.2s ease-in-out;
+        text-align: center;
+        box-sizing: border-box;
+        font-size: 1vw; 
+}
+
+    .submit-button:hover {
+        background: linear-gradient(90deg, #A0522D, #8B5A2B); 
+        transform: translateY(-2px); 
+        box-shadow: 0 6px #5C4033; 
+        text-align: center;
+        box-sizing: border-box;
+        font-size: 1vw; 
+    }
+
+    .submit-button:active {
+        background: linear-gradient(90deg, #6E3B1E, #5C4033); 
+        transform: translateY(2px); 
+        box-shadow: 0 2px #452E1F; 
+        text-align: center;
+        box-sizing: border-box; 
+        font-size: 1vw; 
+    }
+
+    .move{
+        position: absolute;
+        color: black;
+
+    }
+    .user-progress-bar{
+        position: absolute;
+        background-color: #ffffff; 
+        overflow: hidden; 
+    
+    }
+
+    .enemy-progress-bar{
+        position: absolute;
+        height: 30px;
+        background-color: #ffffff; 
+        overflow: hidden; 
+    
+    }
+
+
+    .progress-bar{
+        position: absolute;
+        background-color: #ff0202; 
+        height: 30px;
+        position: relative;
+        background-size: 200% 200%; 
+        animation: liquidFlow 5s ease-in-out infinite;
+        transition: 2s ease-in-out;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px; 
+        color: white;
+        
+        
+    }
+
+    #healthborder{
+        width: 220px;
+    }
+
+    #healthborder2{
+        width: 220px;
+        
+    }
+
+
+
+    
+</style>
+    
+    
+    
+</head>
+
+
+<body onload="start();">
+    <canvas id="myCanvas" width="1000px" height="550px"> </canvas>
+
+    <img id="healthborder" src="healthborder.png"/>
+
+    <img id="healthborder2" src="opponent_health_border.png"  />
+    <div class="user-progress-bar" id="user-progress-bar-bg" hidden="true" > 
+        <div class="progress-bar" id="user-progress-bar" width="200px"> </div>   
+    </div>
+
+    <div class="enemy-progress-bar" id="enemy-progress-bar-bg" hidden="true">
+        <div class="progress-bar" id="enemy-progress-bar" width="100%"> </div>
+    </div>
+    <img id="background" src="preview.png" width="1000px" height="550px"> 
+    <img id="start" src="start_button.png"/>
+    <img id="start-hover" src="start_button_hover.png" /> 
+    <img id="select-background" src="selectBackground.png" />
+    <img id="scroll1" src="0.png" />
+    <img id="character-idle" src="idle_1.png" />
+    <img id="enemy-character" src="idle2_1.png"/>
+    <img id="next-button" src="next.png"/>
+    <img id="back-button" src="return.png"/>
+    <img id="test" src="idle4_1.png" />
+    <img id="health-point" src="HP.png"/>
+    <img id="defence" src="Defence.webp"/>
+    <img id="atk-point" src="ATK.png"/>
+    <img id="crit" src="crit.png"/>
+    <img id="energy" src="energy.png"/>
+    <img id="special" src="special.png"/>
+    <img id="map" src="map.jpg"/>
+    <img id="battle-map"/>
+    <img id="pointer" src="Skull.png"/>
+    <img id="ult-charge" src="ult_symbol.png"/>
+    <img id="game-over" src="game_over.webp"/>
+    <img id="win-screen" src="win_screen.jpg"/>
+    <img id="battle-button" src="attack_button.png"/>
+    <img id="battle-button-bg" src="battle_button_bg.png"/>
+    
+
+    <input type="text" id="text-input"5 placeholder="Enter Character Name" hidden="true">
+    <button class="submit-button" id="submit-button" hidden="true" onclick="submitAll();">Submit</button>
+    <input type="text" id="input-name" placeholder="Enter Move Name" hidden="true">
+    <input type="text" id="input-damage" placeholder="Enter 0-100 Dmg" hidden="true">
+    
+
+    <button class="submit-button" id="random" hidden="true" onclick="randomizeStat()">Randomize Stats</button>
+
+
+    <input type="text" id="input-attack" placeholder="Enter Attack Stat" hidden="true">
+    <input type="text" id="input-defence" placeholder="Enter Defence Stat" hidden="true">
+    <input type="text" id="input-health" placeholder="Enter Health Stat" hidden="true">
+    <input type="text" id="input-critical" placeholder="Enter Critical Stat" hidden="true">
+    <input type="text" id="input-energy" placeholder="Enter Energy Stat" hidden="true">
+    
+    <button type="button" class="submit-button" id="back-to-town" hidden="true" onclick="drawTownCenter();" style="top: 70%;">Back To Town</button>
+
+    <button class="submit-button" id="stat" hidden="true">Submit Stats</button>
+
+    <img id="town-center" src="town_center.jpg"/>
+    <img id="map-symbol" src="map_symbol.png"/>
+
+    <img id="add-character" src ="add_button.png"/>
+
+    
+
+    <img id="leaderboard" src="Exclamation.png"/>
+    <img id="wins" src="wins.png" hidden="true"/>
+
+    <input type="text" id="search-character" placeholder="Enter Player"  hidden="true">
+
+    <img id="exit" src="exit.png" />
+    
+    <button class="submit-button" id="sort" hidden="true" onclick="changeSort() " ></button>
+<script src="main.js"> </script>
+</body>
+</html>
